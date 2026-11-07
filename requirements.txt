@@ -1,0 +1,8 @@
+# Development / test dependencies. The plugin's runtime pins live in
+# "Denon AVR.indigoPlugin/Contents/Server Plugin/requirements.txt" (Indigo installs that one).
+pytest==8.4.2
+black==25.9.0
+ruff==0.13.3
+
+# Same denonavr pin as the plugin bundle, so the contract tests exercise the shipped version.
+denonavr==1.3.3

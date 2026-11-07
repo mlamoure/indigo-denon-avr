@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!--
+  Device and state ids are part of the plugin's contract: triggers, conditions, linked scripts,
+  other plugins (Group Change Listener, Timed Devices) and tools/migrate_from_cynical_denon.py
+  refer to them. Never rename one.
+
+  `state` is a list state on purpose: Indigo derives state.on / state.off / state.unavailable
+  from it, the same sub-states Cynical Denon exposed, so existing references keep working.
+  "unavailable" means the receiver cannot be reached at all; a telnet outage alone shows in
+  `connected` (receiver device) and leaves `state` alone.
+-->
+<Devices>
+	<Device type="custom" id="receiver">
+		<Name>Receiver (main zone)</Name>
+		<ConfigUI>
+			<Field id="address" type="textfield">
+				<Label>IP address or host name:</Label>
+			</Field>
+			<Field id="addressNote" type="label" fontSize="small" fontColor="darkgray">
+				<Label>The main zone of a Denon or Marantz network receiver. Add Zone 2 or Zone 3 as separate Zone devices.</Label>
+			</Field>
+		</ConfigUI>
+		<States>
+			<State id="state">
+				<ValueType>
+					<List>
+						<Option value="on">On</Option>
+						<Option value="off">Off</Option>
+						<Option value="unavailable">Unavailable</Option>
+					</List>
+				</ValueType>
+				<TriggerLabel>Status</TriggerLabel>
+				<TriggerLabelPrefix>Status is</TriggerLabelPrefix>
+				<ControlPageLabel>Status</ControlPageLabel>
+				<ControlPageLabelPrefix>Status is</ControlPageLabelPrefix>
+			</State>
+			<State id="power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power</TriggerLabel>
+				<ControlPageLabel>Power</ControlPageLabel>
+			</State>
+			<State id="source">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input code (e.g. SAT/CBL, CD)</TriggerLabel>
+				<ControlPageLabel>Input code</ControlPageLabel>
+			</State>
+			<State id="source_name">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input name</TriggerLabel>
+				<ControlPageLabel>Input name</ControlPageLabel>
+			</State>
+			<State id="volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="muted">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Muted</TriggerLabel>
+				<ControlPageLabel>Muted</ControlPageLabel>
+			</State>
+			<State id="connected">
+				<ValueType boolType="TrueFalse">Boolean</ValueType>
+				<TriggerLabel>Live connection (telnet)</TriggerLabel>
+				<ControlPageLabel>Connected</ControlPageLabel>
+			</State>
+			<State id="model">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Model</TriggerLabel>
+				<ControlPageLabel>Model</ControlPageLabel>
+			</State>
+		</States>
+		<UiDisplayStateId>state</UiDisplayStateId>
+	</Device>
+
+	<Device type="custom" id="zone">
+		<Name>Zone (Zone 2 / Zone 3)</Name>
+		<ConfigUI>
+			<Field id="receiver" type="menu">
+				<Label>Receiver:</Label>
+				<List class="self" method="receiverMenu" dynamicReload="true"/>
+			</Field>
+			<Field id="zone" type="menu" defaultValue="2">
+				<Label>Zone:</Label>
+				<List>
+					<Option value="2">Zone 2</Option>
+					<Option value="3">Zone 3</Option>
+				</List>
+			</Field>
+		</ConfigUI>
+		<States>
+			<State id="state">
+				<ValueType>
+					<List>
+						<Option value="on">On</Option>
+						<Option value="off">Off</Option>
+						<Option value="unavailable">Unavailable</Option>
+					</List>
+				</ValueType>
+				<TriggerLabel>Status</TriggerLabel>
+				<TriggerLabelPrefix>Status is</TriggerLabelPrefix>
+				<ControlPageLabel>Status</ControlPageLabel>
+				<ControlPageLabelPrefix>Status is</ControlPageLabelPrefix>
+			</State>
+			<State id="power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power</TriggerLabel>
+				<ControlPageLabel>Power</ControlPageLabel>
+			</State>
+			<State id="source">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input code (SOURCE = follow main zone)</TriggerLabel>
+				<ControlPageLabel>Input code</ControlPageLabel>
+			</State>
+			<State id="source_name">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input name</TriggerLabel>
+				<ControlPageLabel>Input name</ControlPageLabel>
+			</State>
+			<State id="volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="muted">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Muted</TriggerLabel>
+				<ControlPageLabel>Muted</ControlPageLabel>
+			</State>
+		</States>
+		<UiDisplayStateId>state</UiDisplayStateId>
+	</Device>
+</Devices>

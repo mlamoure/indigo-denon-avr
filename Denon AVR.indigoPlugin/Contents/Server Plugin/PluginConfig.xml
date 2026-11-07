@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<PluginConfig>
+	<Field id="reconcileMinutes" type="textfield" defaultValue="5">
+		<Label>Re-read every zone every (minutes):</Label>
+	</Field>
+	<Field id="reconcileNote" type="label" fontSize="small" fontColor="darkgray">
+		<Label>Live changes arrive at once over the receiver's telnet connection. This periodic re-read also corrects anything missed while the connection was down.</Label>
+	</Field>
+	<Field id="sep1" type="separator"/>
+	<Field id="showDebugInfo" type="checkbox" defaultValue="false">
+		<Label>Debug logging:</Label>
+		<Description>Log every command sent</Description>
+	</Field>
+</PluginConfig>

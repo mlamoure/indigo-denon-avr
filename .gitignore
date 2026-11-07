@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Indigo installs Contents/Server Plugin/requirements.txt into this folder on first start;
+# it must never be committed (a stale pip-install-log-success.txt stops Indigo installing).
+Denon AVR.indigoPlugin/Contents/Packages/
+
+# Migration working copies of the Indigo database (never commit a real database)
+*.indiDb
+*.indiDb.*
+
+# Packaging / OS noise
+*.zip
+.DS_Store
+*.log

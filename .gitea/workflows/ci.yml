@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+          # No pip cache: the actions cache server is not reachable from the runner and the
+          # cache-save post-step hangs the job for hours.
+      - name: Install dev dependencies
+        run: pip install -r requirements.txt
+      - name: Install the plugin's runtime pins (what Indigo installs)
+        run: pip install -r "Denon AVR.indigoPlugin/Contents/Server Plugin/requirements.txt"
+      - name: Format check
+        run: black --check .
+      - name: Lint (syntax errors + pyflakes)
+        run: ruff check --select E9,F .
+      - name: Tests
+        run: python -m pytest -q

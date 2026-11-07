@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "description": "denonavr is the receiver library: one PR per release so CI (contract tests) judges each bump on its own. Bump the dev requirements.txt pin in the same PR.",
+      "matchManagers": ["pip_requirements"],
+      "matchPackageNames": ["denonavr"],
+      "groupName": "denonavr"
+    },
+    {
+      "description": "denonavr's transitive packages: exact pins in the plugin bundle, bumped together once a month.",
+      "matchManagers": ["pip_requirements"],
+      "matchFileNames": ["Denon AVR.indigoPlugin/Contents/Server Plugin/requirements.txt"],
+      "excludePackageNames": ["denonavr"],
+      "groupName": "plugin runtime dependencies",
+      "schedule": ["before 6am on the first day of the month"]
+    },
+    {
+      "description": "Indigo 2026.1 runs plugins on Python 3.13; CI must test the interpreter Indigo uses, not the newest one.",
+      "matchDepNames": ["python"],
+      "allowedVersions": "<3.14"
+    }
+  ]
+}

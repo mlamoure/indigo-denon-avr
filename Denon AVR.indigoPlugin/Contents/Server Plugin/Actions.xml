@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+  Action ids and their prop keys are part of the plugin's contract (stored in the Indigo
+  database for every action step; also used by tools/migrate_from_cynical_denon.py and by
+  linked scripts through executeAction). Never rename one.
+-->
+<Actions>
+	<Action id="set_power" deviceFilter="self">
+		<Name>Power</Name>
+		<CallbackMethod>set_power</CallbackMethod>
+		<ConfigUI>
+			<Field id="value" type="menu" defaultValue="on">
+				<Label>Power:</Label>
+				<List>
+					<Option value="on">On</Option>
+					<Option value="off">Off</Option>
+					<Option value="toggle">Toggle</Option>
+				</List>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="set_source" deviceFilter="self">
+		<Name>Select Input</Name>
+		<CallbackMethod>set_source</CallbackMethod>
+		<ConfigUI>
+			<Field id="source" type="menu">
+				<Label>Input:</Label>
+				<List class="self" method="sourceMenu" dynamicReload="true"/>
+			</Field>
+			<Field id="source_other" type="textfield" visibleBindingId="source" visibleBindingValue="other">
+				<Label>Input code:</Label>
+			</Field>
+			<Field id="sourceNote" type="label" fontSize="small" fontColor="darkgray">
+				<Label>Codes are the receiver's own (SAT/CBL, CD, BD, MPLAY, ...). Zones also accept SOURCE (follow the main zone).</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="set_volume" deviceFilter="self">
+		<Name>Set Volume</Name>
+		<CallbackMethod>set_volume</CallbackMethod>
+		<ConfigUI>
+			<Field id="volume" type="textfield" defaultValue="-40">
+				<Label>Volume (dB):</Label>
+			</Field>
+			<Field id="volumeNote" type="label" fontSize="small" fontColor="darkgray">
+				<Label>-80 to 18 dB. The main zone takes 0.5 dB steps, zones whole dB. Variable substitution (%%v:ID%%) works.</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="adjust_volume" deviceFilter="self">
+		<Name>Volume Up / Down</Name>
+		<CallbackMethod>adjust_volume</CallbackMethod>
+		<ConfigUI>
+			<Field id="direction" type="menu" defaultValue="up">
+				<Label>Direction:</Label>
+				<List>
+					<Option value="up">Up</Option>
+					<Option value="down">Down</Option>
+				</List>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="set_mute" deviceFilter="self">
+		<Name>Mute</Name>
+		<CallbackMethod>set_mute</CallbackMethod>
+		<ConfigUI>
+			<Field id="value" type="menu" defaultValue="on">
+				<Label>Mute:</Label>
+				<List>
+					<Option value="on">Mute</Option>
+					<Option value="off">Unmute</Option>
+					<Option value="toggle">Toggle</Option>
+				</List>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="sep1" />
+	<Action id="refresh" deviceFilter="self">
+		<Name>Refresh Status</Name>
+		<CallbackMethod>refresh</CallbackMethod>
+	</Action>
+	<Action id="send_command" deviceFilter="self">
+		<Name>Send Raw Command</Name>
+		<CallbackMethod>send_command</CallbackMethod>
+		<ConfigUI>
+			<Field id="command" type="textfield">
+				<Label>Command:</Label>
+			</Field>
+			<Field id="commandNote" type="label" fontSize="small" fontColor="darkgray">
+				<Label>A Denon/Marantz protocol command sent as-is, e.g. PSDYNVOL MED or Z2SLP60. Variable substitution works.</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+</Actions>
